@@ -56,7 +56,7 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
 
 export const App = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <AuthProvider>
         <SocketProvider>
           <SimulationProvider>
