@@ -1,4 +1,5 @@
 import { API_BASE_URL } from '../utils/constants';
+import { mockBackend } from './mockBackend';
 
 class ApiService {
   getToken() {
@@ -36,8 +37,10 @@ class ApiService {
       }
       return data;
     } catch (err) {
-      console.error(`API Error on [${options.method || 'GET'} ${endpoint}]:`, err.message);
-      throw err;
+      // Automatic fallback to embedded mock data for GitHub Pages / Static Hosting
+      console.warn(`[WILD SENSE] Live backend unavailable for [${options.method || 'GET'} ${endpoint}]. Running in embedded standalone mode.`);
+      const mockResult = mockBackend.handle(endpoint, options);
+      return mockResult;
     }
   }
 
